@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="theme-link" href="https://cdn.syncfusion.com/ej2/29.1.33/tailwind.css" rel="stylesheet">
+    <script src="https://cdn.syncfusion.com/ej2/29.1.33/dist/ej2.min.js" type="text/javascript"></script>
+    <title>Essential JS2 for Javascript - JSON and XML to Diagram Layout</title>
+</head>
+<body>
+
+    <!-- Main application layout container -->
+    <div class="app-layout">
+        <!-- Top navigation bar with logo, title, and menu buttons -->
+        <div class="navbar">
+            <!-- Left side of navbar with logo and main menu buttons -->
+            <div class="navbar-left">
+                <img src="./assets/logo.svg" alt="Logo" class="nav-logo"/>
+                <span class="nav-title">JSON To Diagram</span>
+                <!-- File operations dropdown button (import/export) -->
+                <button id="file-ddb">File</button>
+                <!-- View options dropdown button (grid, count, expand/collapse) -->
+                <button id="view-ddb">View</button>
+                <!-- Theme selection dropdown button (light/dark) -->
+                <button id="theme-ddb">Theme</button>
+            </div>
+            <!-- Right side of navbar with editor type toggle -->
+            <div class="navbar-right">
+                <!-- Editor type switcher (JSON/XML) -->
+                <div id="editor-type"></div>
+            </div>
+        </div>
+
+        <!-- Main content area with split panel layout -->
+        <div class="main-grid">
+            <!-- Left panel containing the code editor -->
+            <div class="left-panel" style="width: 300px;">
+                <!-- Monaco editor container for JSON/XML input -->
+                <div id="json-editor"></div>
+            </div>
+            <!-- Resizable splitter between left and right panels -->
+            <div class="splitter"></div>
+            <!-- Right panel containing diagram and controls -->
+            <div class="right-panel scroll-hide">
+                <!-- Hamburger menu button for mobile/compact view -->
+                <button id="hamburger-menu"></button>
+                <!-- Main diagram visualization area -->
+                <div id="diagram"></div>
+                <!-- Toolbar container with diagram controls and search -->
+                <div id="toolbar-container">
+                    <!-- Diagram toolbar with zoom and layout controls -->
+                    <div id="toolbar"></div>
+                    <!-- Search functionality container -->
+                    <div class="search-bar-container">
+                        <!-- Node search input field -->
+                        <input id="toolbar-search" type="text" placeholder="Search Node" />
+                    </div>
+                </div>
+                <!-- Loading spinner overlay -->
+                <div id="spinner-container" class="e-spinner-overlay">
+                    <div id="spinner"></div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Bottom status bar with validation and node count information -->
+        <div class="bottom-bar">
+            <div class="bottom-bar-content">
+                <!-- Status message area showing validation state -->
+                <span class="status-message">
+                    <!-- Valid data indicator with checkmark icon -->
+                    <div>
+                        <span class="e-icons e-check"></span>
+                        <!-- Empty span that will be populated with "Valid JSON" or "Valid XML" text -->
+                        <span></span>
+                    </div>
+                    <!-- Invalid data indicator with error icon (hidden by default) -->
+                    <div style="display: none;">
+                        <span class="e-icons e-close invalid-json"></span>
+                        <!-- Empty span that will be populated with "Invalid JSON" or "Invalid XML" text -->
+                        <span></span>
+                    </div>
+                </span>
+                <!-- Node count display on the right side -->
+                <span class="bottom-right">Nodes: 0</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

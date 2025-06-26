@@ -1,0 +1,32 @@
+{
+  "name": "@syncfusion/ej2-js-jsonandxml-to-diagram-visualizer",
+  "version": "1.0.0",
+  "description": "Essential JS 2 - JSON and XML to Diagram Visualizer",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development --open",
+    "ci-publish": "gulp publish-sample"
+  },
+  "author": "Syncfusion Inc.",
+  "license": "SEE LICENSE IN license",
+  "devDependencies": {
+    "@syncfusion/ej2-showcase-helper": "*",
+    "copy-webpack-plugin": "^13.0.0",
+    "css-loader": "^6.11.0",
+    "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "monaco-editor-webpack-plugin": "^7.1.0",
+    "sass": "^1.89.1",
+    "sass-loader": "^13.3.3",
+    "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.9",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^5.2.3",
+    "monaco-editor": "^0.52.2"
+  }
+}

@@ -422,14 +422,7 @@ function configureExpandCollapseIcons(
 
 // Defines default styling and behavior for diagram connectors
 function getConnectorDefaults(connector) {
-  connector.constraints =
-    (ej.diagrams.ConnectorConstraints.Default |
-      ej.diagrams.ConnectorConstraints.ReadOnly) &
-    ~(
-      ej.diagrams.ConnectorConstraints.DragSourceEnd |
-      ej.diagrams.ConnectorConstraints.DragTargetEnd |
-      ej.diagrams.ConnectorConstraints.Select
-    );
+  connector.constraints = ej.diagrams.ConnectorConstraints.Default & ej.diagrams.ConnectorConstraints.Select;
   connector.type = "Orthogonal";
   connector.style = {
     strokeColor: currentThemeSettings.connectorStrokeColor,

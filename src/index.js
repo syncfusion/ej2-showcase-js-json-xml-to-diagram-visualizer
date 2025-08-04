@@ -739,9 +739,8 @@ window.addEventListener("toolClick", (toolClickEvent) => {
     case "fitToPage":
       diagram.reset();
       diagram.fitToPage({
-        mode: "Page",
-        region: "Content",
         canZoomIn: true,
+        canZoomOut: true
       });
       break;
     case "zoomIn":

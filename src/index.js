@@ -10,6 +10,7 @@ import { initToolBar } from "./toolbar.js";
 import { initExportDetailsDialog } from "./export-details-dialog.js";
 import * as monaco from "monaco-editor";
 import { XMLBuilder, XMLParser } from "fast-xml-parser";
+import { updateCollapseMenuText } from "./hamburger-menu.js";
 
 // Inject required modules into the diagram
 ej.diagrams.Diagram.Inject(
@@ -134,6 +135,8 @@ function handleEditorContentChange() {
     updateEditorStatus(false);
     showSpinner();
   }
+  isGraphCollapsed = false;
+  updateCollapseMenuText(isGraphCollapsed);
 }
 
 // Initializes and configures the diagram including nodes, connectors, and layout settings
@@ -159,6 +162,7 @@ function initializeDiagram() {
     scrollSettings: { scrollLimit: "Infinity" },
     getNodeDefaults: getNodeDefaults,
     getConnectorDefaults: getConnectorDefaults,
+    expandStateChange: handleExpandStateChange
   });
   diagram.appendTo("#diagram");
 }
@@ -353,8 +357,8 @@ function configureParentNodeAnnotations(
     left: showChildItemsCount
       ? annotationMargin
       : showExpandCollapseIcon
-      ? -annotationMargin
-      : 0,
+        ? -annotationMargin
+        : 0,
   };
   keyAnnotation.horizontalAlignment = showChildItemsCount ? "Left" : "Center";
 
@@ -432,6 +436,19 @@ function getConnectorDefaults(connector) {
   connector.targetDecorator = { shape: "None" };
   return connector;
 }
+// To handle expand and collapse
+function handleExpandStateChange(args) {
+  const node = args.element;
+  if (!node || typeof node !== 'object') {
+    return;
+  }
+  // Check if it's a root node (no incoming edges)
+  const isRootNode = !node.inEdges || node.inEdges.length === 0;
+  if (isRootNode) {
+    isGraphCollapsed = !node.isExpanded;
+    updateCollapseMenuText(isGraphCollapsed);
+  }
+};
 
 // Calculates and returns the size of the node based on its content
 function calculateNodeSize(
@@ -868,7 +885,7 @@ document.addEventListener("fileAction", function (fileActionEvent) {
   if (fileAction === "import") {
     importFromFile()
       .then((importedFileContent) => {
-  try {
+        try {
           editor.setValue(importedFileContent); // Update the Monaco editor with imported content
 
           let processedDiagramData;
@@ -925,7 +942,7 @@ function importFromFile() {
         const fileReader = new FileReader();
         fileReader.onload = (fileLoadEvent) => {
           resolve(fileLoadEvent.target.result);
-      };
+        };
         fileReader.onerror = () => {
           reject("Error reading the file");
         };
@@ -970,10 +987,12 @@ document.addEventListener("viewOptionToggled", function (viewOptionEvent) {
       break;
     case "view-count":
       showChildItemsCount = !showChildItemsCount;
+      diagram.fitToPage({ mode: "Page", region: "Content", canZoomIn: true });
       diagram.refresh();
       break;
     case "expand-collapse":
       showExpandCollapseIcon = !showExpandCollapseIcon;
+      diagram.fitToPage({ mode: "Page", region: "Content", canZoomIn: true });
       diagram.refresh();
       break;
   }
@@ -1090,7 +1109,7 @@ document.addEventListener("editorTypeChanged", (editorTypeChangeEvent) => {
         jsonToXmlObject
       ); // Process the original JSON data using JsonDiagramParser
       updateEditorStatus(true); // Update editor status to valid
-  }
+    }
   } catch (conversionError) {
     console.error("Parsing Error:", conversionError); // Log parsing errors
     updateEditorStatus(false); // Update status to invalid on error
@@ -1103,4 +1122,6 @@ document.addEventListener("editorTypeChanged", (editorTypeChangeEvent) => {
       convertedDiagramData.connectors
     );
   }
+  isGraphCollapsed = false;
+  updateCollapseMenuText(isGraphCollapsed);
 });
